@@ -54,7 +54,7 @@ class DicionarioArvoreBinariaService {
   List<NoDicionarioModel> obterPreOrdem({
     required NoDicionarioModel? no,
     required String pesquisa,
-    List<NoDicionarioModel> retorno = const [],
+    required List<NoDicionarioModel> retorno,
   }) {
     if (no is NoDicionarioModel) {
       if (no.palavra.toUpperCase().contains(pesquisa.toUpperCase())) {
@@ -103,7 +103,7 @@ class DicionarioArvoreBinariaService {
   List<NoDicionarioModel> obterPosOrdem({
     required NoDicionarioModel? no,
     required String pesquisa,
-    List<NoDicionarioModel> retorno = const [],
+    required List<NoDicionarioModel> retorno,
   }) {
     if (no is NoDicionarioModel) {
       retorno = obterPosOrdem(no: no.esquerdo, pesquisa: pesquisa, retorno: retorno);
