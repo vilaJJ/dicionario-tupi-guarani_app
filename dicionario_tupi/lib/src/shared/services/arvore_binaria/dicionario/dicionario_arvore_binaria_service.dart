@@ -78,15 +78,15 @@ class DicionarioArvoreBinariaService {
   List<NoDicionarioModel> obterEmOrdem({
     required NoDicionarioModel? no,
     required String pesquisa,
-    List<NoDicionarioModel> retorno = const [],
+    required List<NoDicionarioModel> retorno,
   }) {
     if (no is NoDicionarioModel) {
-      retorno = obterPreOrdem(no: no.esquerdo, pesquisa: pesquisa, retorno: retorno);
+      retorno = obterEmOrdem(no: no.esquerdo, pesquisa: pesquisa, retorno: retorno);
 
       if (no.palavra.toUpperCase().contains(pesquisa.toUpperCase())) {
         retorno.add(no);
       }
-      retorno = obterPreOrdem(no: no.direito, pesquisa: pesquisa, retorno: retorno);
+      retorno = obterEmOrdem(no: no.direito, pesquisa: pesquisa, retorno: retorno);
     }
 
     return retorno;
@@ -106,8 +106,8 @@ class DicionarioArvoreBinariaService {
     List<NoDicionarioModel> retorno = const [],
   }) {
     if (no is NoDicionarioModel) {
-      retorno = obterPreOrdem(no: no.esquerdo, pesquisa: pesquisa, retorno: retorno);
-      retorno = obterPreOrdem(no: no.direito, pesquisa: pesquisa, retorno: retorno);
+      retorno = obterPosOrdem(no: no.esquerdo, pesquisa: pesquisa, retorno: retorno);
+      retorno = obterPosOrdem(no: no.direito, pesquisa: pesquisa, retorno: retorno);
 
       if (no.palavra.toUpperCase().contains(pesquisa.toUpperCase())) {
         retorno.add(no);
@@ -121,10 +121,6 @@ class DicionarioArvoreBinariaService {
   ///
   /// Caso a palavra já exista na árvore do dicionário, será estourada uma exceção.
   void _inserir(NoDicionarioModel noInserir, NoDicionarioModel noAtual) {
-    if (noInserir.palavra == noAtual.palavra) {
-      throw Exception("A palavra não será inserida, pois ela já existe no dicionário.");
-    }
-
     if (noInserir.palavra.isMaiorQue(noAtual.palavra)) {
       if (noAtual.direito is NoDicionarioModel) {
         _inserir(noInserir, noAtual.direito!);
@@ -135,7 +131,7 @@ class DicionarioArvoreBinariaService {
       if (noAtual.esquerdo is NoDicionarioModel) {
         _inserir(noInserir, noAtual.esquerdo!);
       } else {
-        noAtual.esquerdo = noAtual;
+        noAtual.esquerdo = noInserir;
       }
     }
   }
