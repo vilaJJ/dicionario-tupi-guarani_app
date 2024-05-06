@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /// Classe de modelo para os nós da árvore binária de busca
 /// do dicionário.
 class NoDicionarioModel {
@@ -24,11 +26,38 @@ class NoDicionarioModel {
     this.direito,
   });
 
+  /// Fabrica uma instância de [NoDicionarioModel], através do [map] informado.
+  factory NoDicionarioModel.fromJson(Map<String, dynamic> map) {
+    return NoDicionarioModel(
+      palavra: map['palavra'] as String,
+      significado: map['significado'] as String,
+    );
+  }
+
   /// Retorna `true` caso o nó seja **folha**, ou seja, [esquerdo] e [direito]
   /// forem iguais a `null`.
   ///
   /// Caso contrário, retornará `false`.
   bool get isFolha {
     return esquerdo == null && direito == null;
+  }
+
+  /// Gera uma lista de [NoDicionarioModel], preparada para ser inserida na
+  /// Árvore Binária de Busca do Dicionário da aplicação.
+  static List<NoDicionarioModel> obterListaDoJson(String json) {
+    final lista = jsonDecode(json) as List;
+
+    final qntdItens = lista.length;
+    final indiceDoMeio = qntdItens ~/ 2;
+
+    final itemMeio = lista[indiceDoMeio];
+
+    lista.removeAt(indiceDoMeio);
+    lista.insert(0, itemMeio);
+
+    return List.generate(
+      qntdItens,
+      (index) => NoDicionarioModel.fromJson(lista[index]),
+    );
   }
 }
