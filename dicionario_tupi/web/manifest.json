@@ -1,11 +1,11 @@
 {
-    "name": "dicionario_tupi",
-    "short_name": "dicionario_tupi",
+    "name": "Dicionário Tupi",
+    "short_name": "Dicionário Tupi",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Aplicativo web para um trabalho da disciplina 'Estrutura de Dados II', do curso superior 'Análise e Desenvolvimento de Sistemas', no IFTO - Araguaína.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
