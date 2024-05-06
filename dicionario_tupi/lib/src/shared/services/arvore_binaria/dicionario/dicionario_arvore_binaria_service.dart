@@ -43,7 +43,7 @@ class DicionarioArvoreBinariaService {
     throw Exception("Não existem palavras para serem removidas do dicionário.");
   }
 
-  /// Retorna uma lista de valores inteiros, referentes aos nós da Árvore binária
+  /// Retorna uma lista de nós do dicionário, referentes aos nós da Árvore binária
   /// dispostos em **pré-ordem**.
   ///
   /// 1. Raiz;
@@ -67,7 +67,7 @@ class DicionarioArvoreBinariaService {
     return retorno;
   }
 
-  /// Retorna uma lista de valores inteiros, referentes aos nós da Árvore binária
+  /// Retorna uma lista de nós do dicionário, referentes aos nós da Árvore binária
   /// dispostos **em-ordem**.
   ///
   /// 1. Esquerda;
@@ -92,7 +92,7 @@ class DicionarioArvoreBinariaService {
     return retorno;
   }
 
-  /// Retorna uma lista de valores inteiros, referentes aos nós da Árvore binária
+  /// Retorna uma lista de nós do dicionário, referentes aos nós da Árvore binária
   /// dispostos em **pós-ordem**.
   ///
   /// 1. Esquerda;
