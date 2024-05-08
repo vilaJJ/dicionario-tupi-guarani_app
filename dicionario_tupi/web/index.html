@@ -18,7 +18,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Aplicativo web para um trabalho da disciplina 'Estrutura de Dados II', do curso superior 'Análise e Desenvolvimento de Sistemas', no IFTO - Araguaína.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -54,6 +54,26 @@
         }
       });
     });
+  </script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBW-5zYMiwdcO2XkrGyIvio4pvsLWkTUIw",
+      authDomain: "dicionario-tupi.firebaseapp.com",
+      projectId: "dicionario-tupi",
+      storageBucket: "dicionario-tupi.appspot.com",
+      messagingSenderId: "992620346796",
+      appId: "1:992620346796:web:ac9a161fd03c37ff13ce09"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
   </script>
 </body>
 </html>

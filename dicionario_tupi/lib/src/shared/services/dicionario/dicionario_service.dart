@@ -32,21 +32,23 @@ class DicionarioService {
 
   /// Inicializa a árvore binária do dicionário, adicionando as palavras
   /// existentes no arquivo _JSON_ provedor.
-  Future<void> inicializarDicionario() async {
+  Future<List<NoDicionarioModel>> inicializarDicionario() async {
     final json = await arquivosService.lerArquivoDosAssets(
       "assets/dicionario/json/dicionario.json",
     );
 
     final lista = NoDicionarioModel.obterListaDoJson(json);
     arvoreBinariaService.inserirLista(lista);
+
+    return _obter();
   }
 
   /// Retorna a lista de palavras do dicionário, baseado nos valores
   /// de [ordenacao] e [pesquisa] informados.
-  List<NoDicionarioModel> obter({
+  Future<List<NoDicionarioModel>> obter({
     OrdemArvoreBinaria? ordenacao,
     String? pesquisa,
-  }) {
+  }) async {
     if (ordenacao is OrdemArvoreBinaria) {
       this.ordenacao = ordenacao;
     }
@@ -54,53 +56,55 @@ class DicionarioService {
       this.pesquisa = pesquisa;
     }
 
-    return _obter();
+    return await _obter();
   }
 
   /// Insere uma palavra no dicionário e retorna a lista com os
   /// valores atualizados, baseado na última filtragem informada.
-  List<NoDicionarioModel> inserir(NoDicionarioModel palavra) {
+  Future<List<NoDicionarioModel>> inserir(NoDicionarioModel palavra) async {
     arvoreBinariaService.inserir(palavra);
-    return _obter();
+    return await _obter();
   }
 
   /// Remove uma palavra no dicionário e retorna a lista com os
   /// valores atualizados, baseado na última filtragem informada.
-  List<NoDicionarioModel> remover(NoDicionarioModel palavra) {
+  Future<List<NoDicionarioModel>> remover(NoDicionarioModel palavra) async {
     arvoreBinariaService.remover(palavra);
-    return _obter();
+    return await _obter();
   }
 
   /// Retorna a lista de palavras do dicionário, baseado nos valores
   /// de [ordenacao] e [pesquisa] informados.
-  List<NoDicionarioModel> _obter() {
+  Future<List<NoDicionarioModel>> _obter() async {
     final raiz = arvoreBinariaService.raiz;
     final retorno = <NoDicionarioModel>[];
 
-    switch (ordenacao) {
-      case OrdemArvoreBinaria.preOrdem:
-        arvoreBinariaService.obterPreOrdem(
-          no: raiz,
-          pesquisa: pesquisa,
-          retorno: retorno,
-        );
-        break;
-      case OrdemArvoreBinaria.emOrdem:
-        arvoreBinariaService.obterEmOrdem(
-          no: raiz,
-          pesquisa: pesquisa,
-          retorno: retorno,
-        );
-        break;
-      case OrdemArvoreBinaria.posOrdem:
-        arvoreBinariaService.obterPosOrdem(
-          no: raiz,
-          pesquisa: pesquisa,
-          retorno: retorno,
-        );
-        break;
-    }
+    return await Future<List<NoDicionarioModel>>.sync(() {
+      switch (ordenacao) {
+        case OrdemArvoreBinaria.preOrdem:
+          arvoreBinariaService.obterPreOrdem(
+            no: raiz,
+            pesquisa: pesquisa,
+            retorno: retorno,
+          );
+          break;
+        case OrdemArvoreBinaria.emOrdem:
+          arvoreBinariaService.obterEmOrdem(
+            no: raiz,
+            pesquisa: pesquisa,
+            retorno: retorno,
+          );
+          break;
+        case OrdemArvoreBinaria.posOrdem:
+          arvoreBinariaService.obterPosOrdem(
+            no: raiz,
+            pesquisa: pesquisa,
+            retorno: retorno,
+          );
+          break;
+      }
 
-    return retorno;
+      return retorno;
+    });
   }
 }

@@ -8,7 +8,9 @@ enum OrdemArvoreBinaria {
   /// 2. Esquerda;
   ///
   /// 3. Direita;
-  preOrdem,
+  preOrdem(
+    nome: "Pré-ordem",
+  ),
 
   /// Indica que os nós da Árvore Binária estarão dispostos **em-ordem**.
   ///
@@ -17,7 +19,9 @@ enum OrdemArvoreBinaria {
   /// 2. Raiz;
   ///
   /// 3. Direita;
-  emOrdem,
+  emOrdem(
+    nome: "Em-ordem",
+  ),
 
   /// Indica que os nós da Árvore Binária estarão dispostos em **pós-ordem**.
   ///
@@ -26,5 +30,18 @@ enum OrdemArvoreBinaria {
   /// 2. Direita;
   ///
   /// 3. Raiz;
-  posOrdem,
+  posOrdem(
+    nome: "Pós-ordem",
+  );
+
+  /// Nome do método.
+  final String nome;
+
+  /// Construtor do enumerador.
+  ///
+  /// Enumerador para indicar qual a ordenação que a Árvore Binária de Busca
+  /// irá trabalhar.
+  const OrdemArvoreBinaria({
+    required this.nome,
+  });
 }

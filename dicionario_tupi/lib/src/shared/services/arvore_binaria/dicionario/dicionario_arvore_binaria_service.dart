@@ -37,7 +37,8 @@ class DicionarioArvoreBinariaService {
   /// Remove o nó especificado em [noRemover], da Árvore binária de busca do Dicionário.
   void remover(NoDicionarioModel no) {
     if (_raiz is NoDicionarioModel) {
-      _remover(no, _raiz);
+      _remover(_raiz, no);
+      return;
     }
 
     throw Exception("Não existem palavras para serem removidas do dicionário.");
@@ -138,43 +139,38 @@ class DicionarioArvoreBinariaService {
 
   /// Remove o nó especificado em [noRemover], da Árvore binária de busca do
   /// Dicionário, de forma recursiva.
-  void _remover(NoDicionarioModel noRemover, NoDicionarioModel? noAtual) {
-    if (noRemover.palavra == noAtual!.palavra) {
-      // Nó folha.
-      if (noAtual.isFolha == true) {
-        noAtual = null;
-      }
-      // Nó com um filho.
-      else if (noAtual.esquerdo == null) {
-        noAtual = noAtual.direito;
-      }
-      // Nó com um filho.
-      else if (noAtual.direito == null) {
-        noAtual = noAtual.esquerdo;
-      }
-      // Nó com dois filhos.
-      else {
-        final noSubstituto = _obterMenorNo(noAtual.direito!);
-        noAtual.palavra = noSubstituto.palavra;
-        _remover(noSubstituto, noAtual.direito);
-      }
-    } else if (noRemover.palavra.isMaiorQue(noAtual.palavra)) {
-      if (noAtual.direito is NoDicionarioModel) {
-        _remover(noRemover, noAtual.direito!);
-      }
-    } else {
-      if (noAtual.esquerdo is NoDicionarioModel) {
-        _remover(noRemover, noAtual.esquerdo!);
-      }
+  NoDicionarioModel? _remover(NoDicionarioModel? noAtual, NoDicionarioModel noRemover) {
+    if (noAtual == null) {
+      return noAtual;
     }
-  }
 
-  /// Retorna o menor nó de determinada árvore binária de busca.
-  NoDicionarioModel _obterMenorNo(NoDicionarioModel noAtual) {
-    while (noAtual.esquerdo is NoDicionarioModel) {
-      noAtual = noAtual.esquerdo!;
+    if (noRemover.palavra.isMenorQue(noAtual.palavra)) {
+      noAtual.esquerdo = _remover(noAtual.esquerdo, noRemover);
+    } else if (noRemover.palavra.isMaiorQue(noAtual.palavra)) {
+      noAtual.direito = _remover(noAtual.direito, noRemover);
+    } else {
+      if (noAtual.esquerdo == null) {
+        return noAtual.direito;
+      } else if (noAtual.direito == null) {
+        return noAtual.esquerdo;
+      }
+
+      noAtual = _obterSucessorEmOrdem(noAtual.direito);
+      noAtual?.direito = _remover(noAtual.direito, noRemover);
     }
 
     return noAtual;
+  }
+
+  /// Retorna o menor nó de determinada árvore binária de busca.
+  NoDicionarioModel? _obterSucessorEmOrdem(NoDicionarioModel? no) {
+    NoDicionarioModel? retorno = no;
+    
+    while (no?.esquerdo != null) {
+      retorno = no?.esquerdo!;
+      no = no?.esquerdo!;
+    }
+
+    return retorno;
   }
 }

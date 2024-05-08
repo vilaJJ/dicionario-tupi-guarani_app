@@ -7,7 +7,7 @@ class NoDicionarioModel {
   String palavra;
 
   /// Significado da palavra no dicionário.
-  final String significado;
+  String significado;
 
   /// Nó à esquerda da raiz.
   NoDicionarioModel? esquerdo;
@@ -40,6 +40,19 @@ class NoDicionarioModel {
   /// Caso contrário, retornará `false`.
   bool get isFolha {
     return esquerdo == null && direito == null;
+  }
+
+  void atualizar({
+    String? palavra,
+    String? significado,
+  }) {
+    if (palavra is String) {
+      this.palavra = palavra;
+    }
+
+    if (significado is String) {
+      this.significado = significado;
+    }
   }
 
   /// Gera uma lista de [NoDicionarioModel], preparada para ser inserida na
